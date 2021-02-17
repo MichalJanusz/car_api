@@ -17,7 +17,7 @@ class RateSerializer(serializers.ModelSerializer):
 
 
 class CarListSerializer(serializers.ModelSerializer):
-    avg_rating = serializers.DecimalField(max_digits=2, decimal_places=1)
+    avg_rating = serializers.DecimalField(max_digits=2, decimal_places=1)  # annotate avg_rating=Avg('rates__rate')
 
     class Meta:
         model = Car
@@ -25,7 +25,7 @@ class CarListSerializer(serializers.ModelSerializer):
 
 
 class PopularitySerializer:
-    rates_number = serializers.IntegerField()
+    rates_number = serializers.IntegerField()  # annotate rates_number=Count('rates__rate') and hope that'll work
 
     class Meta:
         model = Car

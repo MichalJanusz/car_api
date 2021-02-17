@@ -16,6 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from rest_api.views import CarsView, DeleteCarView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('cars/', CarsView.as_view()),
+    path('cars/<int:pk>', DeleteCarView.as_view()),
+
 ]
