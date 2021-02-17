@@ -1,5 +1,5 @@
 import requests
-from django.db.models import Avg
+from django.db.models import Avg, Count
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from rest_api.models import Car
-from rest_api.serializers import CarCreationSerializer, CarListSerializer, RateSerializer
+from rest_api.serializers import CarCreationSerializer, CarListSerializer, RateSerializer, PopularSerializer
 
 
 class CarsView(APIView):
@@ -43,7 +43,7 @@ class CarsView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, format=None):
-        cars = Car.objects.all().annotate(avg_rating=Avg('rates__rating'))
+        cars = Car.objects.all().annotate(avg_rating=Avg('rates__rating')).order_by('pk')
         serializer = CarListSerializer(cars, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -67,3 +67,11 @@ class RateView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PopularView(APIView):
+
+    def get(self, request, format=None):
+        cars = Car.objects.all().annotate(rates_number=Count('rates__rating')).order_by('-rates_number')
+        serializer = PopularSerializer(cars, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

@@ -24,7 +24,7 @@ class CarListSerializer(serializers.ModelSerializer):
         fields = ['id', 'make', 'model', 'avg_rating']
 
 
-class PopularitySerializer:
+class PopularSerializer(serializers.ModelSerializer):
     rates_number = serializers.IntegerField()  # annotate rates_number=Count('rates__rate') and hope that'll work
 
     class Meta:
