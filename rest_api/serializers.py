@@ -13,7 +13,7 @@ class CarCreationSerializer(serializers.ModelSerializer):
 class RateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rate
-        fields = ['car_id', 'rate']
+        fields = ['car_id', 'rating']
 
 
 class CarListSerializer(serializers.ModelSerializer):
