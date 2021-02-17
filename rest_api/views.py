@@ -43,7 +43,7 @@ class CarsView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, format=None):
-        cars = Car.objects.all().annotate(avg_rating=Avg('rates__rate'))
+        cars = Car.objects.all().annotate(avg_rating=Avg('rates__rating'))
         serializer = CarListSerializer(cars, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -59,3 +59,11 @@ class DeleteCarView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
+class RateView(APIView):
+
+    def post(self, request, format=None):
+        serializer = RateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
