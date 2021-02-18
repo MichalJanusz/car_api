@@ -35,7 +35,7 @@ class CarsView(APIView):
                 api_model = list(filter(lambda car: car['Model_Name'] == model, results))
 
                 if len(api_model) == 0:
-                    not_found_err = {'error': 'Resource not found'}
+                    not_found_err = {'error': 'make or model not found'}
                     return Response(not_found_err, status=status.HTTP_404_NOT_FOUND)
 
                 serializer.save()
