@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from rest_api.views import CarsView, DeleteCarView, RateView, PopularView
+from rest_api.views import CarsView, DeleteCarView, RateView, PopularView, MainView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +24,6 @@ urlpatterns = [
     path('cars/<int:pk>', DeleteCarView.as_view()),
     path('rate/', RateView.as_view()),
     path('popular/', PopularView.as_view()),
+    path('', MainView.as_view()),
 
 ]
