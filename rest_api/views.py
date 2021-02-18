@@ -4,6 +4,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
 # Create your views here.
+from django.views import View
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -75,3 +76,15 @@ class PopularView(APIView):
         cars = Car.objects.all().annotate(rates_number=Count('rates__rating')).order_by('-rates_number')
         serializer = PopularSerializer(cars, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class MainView(View):
+
+    def get(self, request):
+        response = '''<p>THE CAR API <p>
+        <p>the page structure and accepted methods are: <p>
+        <p>/cars/ : GET - list of all cars with avg_rating, POST - add a new car 'make' and 'model' in request <p>
+        <p>/cars/{id} : DELETE - delete a car with id = {id} <p>
+        <p>/rate/ : POST - rate a car 'car_id' and 'rating' in request <p>
+        <p>/popular/ : GET - list of the most popular cars based on no. rates<p>'''
+        return HttpResponse(response)
