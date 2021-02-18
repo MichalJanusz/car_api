@@ -82,7 +82,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'car_api',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PASSWORD': 'haslo1234',
         'USER': 'postgres',
         'PORT': 5432
